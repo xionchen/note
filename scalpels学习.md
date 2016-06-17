@@ -485,8 +485,8 @@ fi
 ```
 [4] https://pypi.python.org/pypi/hacking<br>
 [5] https://pypi.python.org/pypi/coverage<br>
-[6] http://docs.openstack.org/developer/pbr/
-[7] http://testrepository.readthedocs.io/en/latest/MANUAL.html
-[8] http://www.sphinx-doc.org/en/stable/invocation.html
-[9] http://docs.openstack.org/developer/devstack/plugins.html
-[10]http://docs.openstack.org/infra/system-config/devstack-gate.html
+[6] http://docs.openstack.org/developer/pbr/<br>
+[7] http://testrepository.readthedocs.io/en/latest/MANUAL.html<br>
+[8] http://www.sphinx-doc.org/en/stable/invocation.html<br>
+[9] http://docs.openstack.org/developer/devstack/plugins.html<br>
+[10]http://docs.openstack.org/infra/system-config/devstack-gate.html<br>
