@@ -10,7 +10,7 @@
   - 最后了解项目本身
 
 ## 1、文件目录结构和关系
-这里逐个说明目录下的文件和作用
+i这里逐个说明目录下的文件和作用
 
 
 ###    tox.ini
@@ -233,24 +233,25 @@ OpenStack 如何安装和维护它的基础设施的，通过对openstack ci工�
     它大部分通过Zuul来控制，Zuul决定了再上面要运行的job
 
 #### Zuul
-Zuul是个面向管道的gating系统。作为Gerrit时间的回应，它促成运行测试和自动化任务
+    Zuul是个面向管道的gating系统。作为Gerrit时间的回应，它促成运行测试和自动化任务
 Zuul的管道：
-    - check
-    新的上传的pathset进入这个管道来获得jenkins的+/-1
-    - gate
-    被core同一个的改变会按照顺序进入这个管道，如果它们通过了Jenkins的测试，会被合入
-    - post
-    这个管道运行在change被合入之后的操作的jobs
-    - pre-release
-    这个管道在项目中运行job来回应pre-lease标签
-    - release
-    如果commit被标记作为一个release，这个管道运行job来出版archives和文档
-    - silent
-    这个管道用于运行新job的silently测试
-    - experimental
-     这个管道用于 新jobs 的on-demand测试
-    - periodic
-    这个管道有jobs，这些jobs用定时器出发（例如测试每天环境的变化）
+- check<br>
+新的上传的pathset进入这个管道来获得jenkins的+/-1
+- gate<br>
+被core同一个的改变会按照顺序进入这个管道，如果它们通过了Jenkins的测试，会被合入
+- post<br>
+这个管道运行在change被合入之后的操作的jobs
+- pre-release<br>
+这个管道在项目中运行job来回应pre-lease标签
+- release<br>
+如果commit被标记作为一个release，这个管道运行job来出版archives和文档
+- silent<br>
+这个管道用于运行新job的silently测试
+- experimental<br>
+这个管道用于 新jobs 的on-demand测试
+- periodic<br>
+这个管道有jobs，这些jobs用定时器出发（例如测试每天环境的变化）
+
 Zuul观测Gerrit中的事件（使用Gerrit“流事件”指令），然后把这些事件和相应的管道相结合，如果发现了匹配，它会将变化添加到管道中，同事开始运行相关的工作
     Gate管道采用推测执行，假设前面的工作会被合入，一定前面的没有被成功合入，就会重新进行没有前面的测试
 
@@ -344,8 +345,10 @@ Any proposed change to the configured set of projects must pass the devstack gat
 
 
 
+
 ## 3、运行例子
-    通过devstack plugin的方式进行运行
+
+通过devstack plugin的方式进行运行
 
 ## 4、代码
 ### 4.1 devstack/plugin.sh
@@ -461,7 +464,6 @@ if is_service_enabled scalpels; then
   # Configure after the other layer 1 and 2 services have been configured
   echo_summary "Configuring scalpels"
   configure_scalpels
-
   elif [[ "$1" == "stack" && "$2" == "extra" ]]; then                 #初始化，启动
   # Initialize and start the scalpels service
   echo_summary "Initializing scalpels"
