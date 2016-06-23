@@ -1,6 +1,8 @@
+# scalpels项目学习(代码细节和python包，现在还没写完)
 ## 一 找到运行的文件
 ### 1 产看命令在哪
-    whereis sca
+this line is uselesw
+whereis sca
     /usr/local/bin
 
 ### 2 找到调用文件
