@@ -273,7 +273,7 @@ struct file_operations exam_single_seq_file_operations = {
 
 注意，如果open函数使用了single_open，release函数必须为single_release，而不是seq_release。 在源代码包中给出了一个使用seq_file的具体例子seqfile_exam.c，它使用seq_file提供了一个查看当前系统运行的所有进程的/proc接口，在编译并插入该模块后，用户通过命令"cat /proc/ exam_esq_file"可以查看系统的所有进程。
 
-    到了这里我们再回看version.c文件就十分的清晰明了了，
+### 1.5到了这里我们再回看version.c文件就十分的清晰明了了，
 show函数负责打印信息，
 ```c
 static int version_proc_show(struct seq_file *m, void *v)
