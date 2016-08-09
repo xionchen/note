@@ -93,7 +93,7 @@ output
 ##### export 导入函数的运行空间
 export -f 可以导入函数，如果你source这个文件再引用这个函数的话，是在你自己的进程空间中调用的函数，而不会新建一个定义这个函数的脚本的进程
 
-## 3 寻找所有element
+3 ## 寻找所有element
 
 主要涉及文件“element_depencies.py”,"logging_config.py"
 ### 学到的用法
@@ -135,7 +135,7 @@ source b
 do a shell fun
 ...
 
-
+b
 export -f fun
 fun{
   pythonshell xxxx
@@ -147,7 +147,6 @@ import sys
 from xxx import mian
 sys.exit(main(sys.argv))
 ```
-上述讲的是diskimage_builder中的情况,实际上python xxx也是一样的
 
 ##### shell中的数组
 example：</br>
@@ -155,67 +154,3 @@ example：</br>
 read -a xxx <<< “a b c d e f”
 遍历数组：</br>
 for x in ${xxx} do;
-
-## 4 检查工具 生成快设备uuid 生成root的label
-
-### 学到的用法
-
-##### ()的用法
-```
-()
-command group.
-(a=hello; echo $a)
-
-Important
-A listing of commands within parentheses starts a subshell.
-
-Variables inside parentheses, within the subshell, are not visible to the rest of the script. The parent process, the script, cannot read variables created in the child process, the subshell.
-a=123
-( a=321; )
-
-echo "a = $a"   # a = 123
-\# "a" within parentheses acts like a local variable.
-
-array initialization.
-Array=(element1 element2 element3)
-```
-
-
-##### 双引号的用法
-之前虽然看过，但是后来忘了，为了防止再忘了记在这里
-使用双引号除了变量名前缀($)、后引符(`)和转义符(\)外，会使shell不再解释引号中其它所有的特殊字符
-
-##### 反引号`和$()的区别
-1. 反引号齐本身就对\\进行了转义，保留了齐本身意思，如果我们想在反引号中起到\\的特殊意义，我们必须使用2个\\来进行表示。
-所以我们可以简单的想象成反引号中： \\ = \
-2. $()中则不需要考虑\\的问题，与我们平常使用的一样： \\ = \\
-
-题外话： 反引号是老的用法，$()是新的用法，不管是在学习测试中，还是在实际工作中， $()的用法都是被推荐的。
-
-##### 查看快设备属性
-blkid
-```
-/dev/sda1: UUID="220E1B870E1B5361" TYPE="ntfs" PARTUUID="0c1d5622-01"
-/dev/sda2: UUID="36134715-a23e-4189-9ec8-d669a1fa8d69" TYPE="ext4" PTTYPE="dos" PARTUUID="0c1d5622-02"
-/dev/sda3: UUID="0007D87B00058E22" TYPE="ntfs" PARTUUID="0c1d5622-03"
-/dev/sda5: LABEL="software" UUID="0006FE2D000A3C10" TYPE="ntfs" PARTUUID="0c1d5622-05"
-/dev/sda6: UUID="0000C0C5000C67D1" TYPE="ntfs" PARTUUID="0c1d5622-06"
-/dev/sda7: UUID="000C10F90003C17B" TYPE="ntfs" PARTUUID="0c1d5622-07"
-/dev/sda8: UUID="65341e30-0bb0-47bf-abf4-b792e7d1c8c6" TYPE="swap" PARTUUID="0c1d5622-08"
-
-```
-
-##### 一个明显改动过的bug和它的考虑
-
-```shell
-# FS_TYPE isn't available until after we source img-defaults
-if [ -z "$DIB_ROOT_LABEL" ]; then
-    # NOTE(bnemec): XFS has a limit of 12 characters for filesystem labels
-    # Not changing the default for other filesystems to maintain backwards compatibility
-    if [ "$FS_TYPE" = "xfs" ]; then
-        DIB_ROOT_LABEL="img-rootfs"
-    else
-        DIB_ROOT_LABEL="cloudimg-rootfs"
-    fi
-fi
-```
