@@ -254,4 +254,4 @@ man test 可以看判断条件，很实用
 #### 其中学到的一些用法：
 
 ##### find
-find的内容比较多，就记在了[linux中find的用法](/linux中find的用法.md)中
+find的内容比较多，就记在了[linux中find的用法](/dib/linux中find的用法.md)中
