@@ -1,13 +1,9 @@
-# 通过一个例子，完整的看一看disk-image-builder是怎么工作的
+# dib代码逻辑和细节
 
 
 主要是shell的一些边边角角，不弄清楚，感觉寸步难行
 
-
-例子：
-
-    disk-image-builder vm centos
-
+先通过逻辑顺一遍，主要是浏览shell的一些用法和代码的逻辑组织
 
 ## 1 获取参数，目录，die
 ### 学到的用法
@@ -88,7 +84,7 @@ output
 13 f2 ./callertest.sh
 14 f3 ./callertest.sh
 16 main ./callertest.sh
-*** an erroe occured ***
+\*\*\* an erroe occured \*\*\*
 
 ##### export 导入函数的运行空间
 export -f 可以导入函数，如果你source这个文件再引用这个函数的话，是在你自己的进程空间中调用的函数，而不会新建一个定义这个函数的脚本的进程
@@ -250,8 +246,16 @@ man test 可以看判断条件，很实用
 #### dib_run_parts（）
 
 从功能上来说还是比较清晰的，先处理了异常数据，然后找到所有运行的脚本，统计运行的时间，最后输出结果。这个脚本的功能还是很实用的。
-
+![](pic/dib_run_part.png)
 #### 其中学到的一些用法：
 
 ##### find
 find的内容比较多，就记在了[linux中find的用法](/linux_shell/linux中find的用法.md)中
+
+##### pushd popd
+把目录压栈和出栈，可以用来改变目录
+
+## 6 将install type写入环境变量 run_d extra-data
+这里基本上都和上面类似
+
+## 7 run_d_in_target
