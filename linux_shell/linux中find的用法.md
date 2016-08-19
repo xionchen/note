@@ -1,5 +1,4 @@
-# FIND(1) in Linux 详细解读
-
+# FIND(1) in Linux
 find 其实也算是很常用的命令，但是平时自己用的功能都比较菜，所以全面的整理一下。
 这里应该囊括了几乎所有的find的用法
 
@@ -25,10 +24,14 @@ find 其实也算是很常用的命令，但是平时自己用的功能都比较
 
 ### find的表达式元素的类型
 
-- Test 用于判断的表达式，返回true或者是false。例如　--empty　用于检测一个文件是否为空，为空就返回１。
-- Action　是对符合test标准的文件的行为，例如　-print 在标准输出打印文件的名字。
-- Clobal options 影响全部的 test 和 action。例如　-depth　让搜索以深度优先。
-- Positional options 影响之后的test 或者 action。例如　-regextype选项　之后可以选择regex的类型
+- Test 用于判断的表达式，返回true或者是false。
+  - 例如　--empty　用于检测一个文件是否为空，为空就返回１。
+- Action　是对符合test标准的文件的行为.
+  - 例如　-print 在标准输出打印文件的名字。
+- Clobal options 影响全部的 test 和 action。
+  - 例如　-depth　让搜索以深度优先。
+- Positional options 影响之后的test 或者 action。
+  - 例如　-regextype选项　之后可以选择regex的类型
 - Operators 用于逻辑表达，-a and -o or 默认的是-a
 
 通过上面这些表达是元素的组合，我们就能进行find操作了
@@ -60,27 +63,30 @@ find 其实也算是很常用的命令，但是平时自己用的功能都比较
     -n    表示小于ｎ
      n    就是ｎ
 
-### TEST中的**时间**相关的表达
+### 6.1TEST中的**时间**相关的表达
 
 **这里的ｎ都是数值，所以可以套用上面的规范，例如：**<br>
+```
+-amin -4表示４分钟内访问的文件
+-amin +4表示４分钟之前访问的文件
+-amin 4表示正好４分钟前访问的文件
+```
 
-    -amin -4表示４分钟内访问的文件
-    -amin +4表示４分钟之前访问的文件
-    -amin 4表示正好４分钟前访问的文件
-
+****
 - -amin n "access minite"就是在n分钟之前访问的文件（这里的ｎ属于上面的数值表达）,例如　-amin -4表示４分钟内访问的文件
 - -atime n 在n*24小时内访问的文件,不满２４小时的部分会被忽略。这里的ｎ通常结合+, -使用。例如　-atime -1 表示一天内访问的文件
 - -cmin n　在ｎ分钟前，被改变状态的文件(例如　读写权限，所属等)
 - -ctime n　在ｎ天内，被改变状态的文件
 - -mmin n　在ｎ分钟前，被修改的文件
 - -mtime n　在ｎ天内，被修改的文件
+- -used n 这个文件最后的访问时间在它最后修改时间的n天后
 
+****
 - -anewer file 在访问“file”前访问的文件
 - -cnewer file 在修改文件状态“file”前修改文件状态的文件
 - -newer file 在修改“file”前修改的文件
 
-- -userd n 这个文件最后的访问时间在它最后修改时间的n天后
-
+****
 - -newerXY reference　这里的XY也是参数，如果Ｘ比Ｙ新的话就返回真。ＸＹ可以的取值如下
   - a 文件"reference"的访问时间
   - B 文件"reference"的创建（birth）时间
@@ -98,7 +104,7 @@ find 其实也算是很常用的命令，但是平时自己用的功能都比较
   例如： -newermt “2012-12-4 12:10:04” 表示在这个时间后修改的文件
 
 
-### TEST中的**用户**相关的表达
+### 6.2TEST中的**用户**相关的表达
 
 - -nogroup 没有组的文件
 - -gid n 文件的组id是ｎ
@@ -108,23 +114,32 @@ find 其实也算是很常用的命令，但是平时自己用的功能都比较
 - - -uid n 以n为uid的用户拥有的文件
 - -user name "name"用户拥有的文件
 
-### TEST中的**文件**相关的表达
+### 6.3TEST中的**文件**相关的表达
 
 - -empty 文件是个空文件
 - -fsytpe type 文件在type类型的文件系统上。
+
+
 - -name pattern 匹配文件名
 - -ilname pattern 大小写敏感的匹配
 - -iname pattern 大小写不敏感的匹配
 - -lname pattern 文件是一个符号链接，并且内容匹配pattern
-- -inum n 这个文件的i节点编号为n，一般而言，用--samefile更方便
+
+
 - -ipath pattern 大小写敏感的路劲匹配
 - -path pattern 匹配完整的文件名（包括路劲的文件名）
-- -iwholename pattern和path是一样的意思
+- -iwholename pattern和ipath是一样的意思
+- ipath patthern 和path是一样的意思
 - -iregex pattern 大小写敏感的正则匹配
 - -regex pattern 正则匹配，匹配的时候匹配整个路劲，而不是文件名。默认使用的是Emacs的正则匹配。
+
+
 - -links n 文件有n个链接
 
+
 - -samefile 同一个文件
+- -inum n 这个文件的i节点编号为n，一般而言，用--samefile更方便
+
 - -size n\[cwbkMG\] 文件大小为n（会经过四舍五入）的文件，可以用+n表示大于n，-n表示小于n的形式。
 - -type c 类型为c的文件，c可以的选择如下
     - b  块设备
@@ -137,9 +152,10 @@ find 其实也算是很常用的命令，但是平时自己用的功能都比较
     - d  d门（solaris中的）
 
 - -xtype c 与type类似，但是在处理符号链接的时候有区别
+-
 - -context （在SELinux中）匹配的安全上下文的文件
 
-### TEST中的**权限**相关的表达
+### 6.4TEST中的**权限**相关的表达
 
 - -perm mode  匹配文件权限刚好为mode的文件，mode可以是 ‘g=w’或者‘0020’
 - -perm -mode 匹配拥有mode所有权限的文件
@@ -153,7 +169,32 @@ find 其实也算是很常用的命令，但是平时自己用的功能都比较
 **ACTION可以执行一些操作，结合TEST和ACTION可是灵活的实现一些功能**
 
 - -delete 删除找到的文件，如果成功放回真，如果失败返回非零值。
+****
 - -exec command 执行command。之后所有的命令都会作为exec的参数，直到遇到一个；，在实际的使用中需要对；转义。find找到的参数，可以用{}来替换。
     - 例如find * -exec rm {} -rf \\;就是删除该目录下的所有文件
 - -exec command {} + 这个和之前相同，但是不是把每个文件都作为一次参数，而是把所有文件并列作为参数
     - 使用“find * -exec echo {} \\;” 和 “find * -exec echo {} \\+”可以很清楚的显示他们的区别
+- -execdir command ;
+- -execdir command {}+ 这两个与exec比较类似，但是传入的参数不是完整的路劲，而是匹配到的路劲。
+  - 例如 find  -name '*' -execdir echo {} \\;会打印出当前文件夹下所有文件的文件名，而不是相对的路基名
+- -ok command ； 类似于-exec，但是带询问的执行命令
+- -okdir command ； 类似与execdir，但是带询问的执行命令
+****
+- -fls file 把输出结果按照ls的格式打印到file文件中
+- -fprint file  把完整的文件名输出都一个文件中每个文件名之后是一个新的行
+- -fprint0 file 把文件的文件名输出到一个文件中，每个文件名之后是一个null字符
+- -ls 按照ls的格式打印找到的文件
+- -print 打印找到的文件的全名，每个名字后是一个新的行
+- -fprint0 打印找到的文件的全名，每个名字后跟一个null字符
+****
+- -prunt True；如果文件是一个目录，不进入它。
+
+## 8、操作符
+- （表达式） 优先处理括号中的表达
+- ! 表达式 非表达式
+- -not 与 ！ 一样
+- 表达式1 表达式2 默认他们是and关系
+- 表达式1 -a 表达式2 和上面相同
+
+- 表达式1 -o 表达式2 或的关系
+- 表达式1，表达式2 他们是并列的关系，表达式1的值会被丢弃。
