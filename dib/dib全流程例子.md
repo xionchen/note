@@ -266,7 +266,7 @@ find的内容比较多，就记在了[linux中find的用法](/linux_shell/linux�
 
 ## 8 do_extra_package_install
 这是一个类似与装饰起之类的东西，真正运行的东西其实如下：
-```
+<!-- ``` -->
 ./elements/dpkg/bin/install-packages
 ./elements/gentoo/bin/install-packages
 ./elements/opensuse/bin/install-packages
@@ -302,3 +302,19 @@ uninstall: False                                                        installt
 - 把built的内容拷贝到mnt目录中
 - mount_proc_dev_sys，在mnt下挂载proc、sysfs文件系统，和dev目录
 - run_d_in_target finalise
+- finalise_base
+
+## IMAGE_TYPES
+
+#### shell 里字符匹配的一种写法
+[[ "表达式" =~ "匹配字符" ]]
+
+#### tar的一些语法
+
+这里有一些解释:
+http://www.gnu.org/software/tar/manual/html_section/tar_52.html#transform
+
+sudo tar -C ${TMP_BUILD_DIR}/mnt -cf $IMAGE_NAME.aci --exclude ./sys \
+                --exclude ./proc --xattrs --xattrs-include=\* \                               --transform 's,^.,rootfs,S' .
+在${TMP_BUILD_DIR}/mnt目录下,-cf 创建一个压缩文件 不要sys/ 不要proc
+然后修改名字	在前面加上rootfs
