@@ -1,0 +1,30 @@
+```{puml}
+digraph a {
+    // 设置图、节点和边的默认属性
+    graph [label="diskimage-builder环境的初始化", bgcolor="#EEEEEE"];
+    node [shape=polygon,style="filled", fillcolor="#AAAAAA"];
+    edge [style="", arrowsize=0.6];
+    // 节点和边
+    rankdir="LR";
+    {
+        rank="same"
+         mk_build_dir   -> {创建TMP_BUILD_DIR,创建TMP_IMAGE_DIR} -> tmpfs_check
+
+
+
+
+
+    }
+
+    {
+        rank="same";
+        create_base  -> getopt -> 解析参数 -> 创建cache -> 将参数转为element ;
+
+    }
+
+
+
+  环境初始化 ->  mk_build_dir -> create_base -> 继续
+}
+
+```
