@@ -1,0 +1,37 @@
+@startuml
+digraph a {
+    // 设置图、节点和边的默认属性
+    graph [label="diskimage-builder总体流程", bgcolor="#EEEEEE"];
+    node [shape=polygon,style="filled", fillcolor="#AAAAAA"];
+    edge [style="", arrowsize=0.6];
+    // 节点和边
+    rankdir="RR";
+    {
+        rank="same"
+        初始化  -> 获取dib路劲_PREFIX -> 导入_LIB ->"source die"
+
+
+
+    }
+
+    {
+        rank="same";
+        读入变量 -> getopt -> 解析参数 -> 创建cache -> 将参数转为element ;
+    }
+    {
+        rank="same"
+        环境检查 -> 检查工具
+    }
+    {
+        rank="same"
+        磁盘变量生成 -> 生成uuid
+        生成uuid -> root_label [label = sdf]
+        生成uuid -> root_label
+
+    }
+
+    初始化 -> 读入变量 -> 环境检查 -> 磁盘变量生成
+}
+
+
+@endstartuml

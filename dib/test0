@@ -1,0 +1,46 @@
+@startuml
+digraph a {
+    // 设置图、节点和边的默认属性
+    graph [label="技能地图", bgcolor="#EEEEEE"];
+    node [shape=polygon,style="filled", fillcolor="#AAAAAA"];
+    edge [style="", arrowsize=0.6];
+    // 节点和边
+    rankdir="R";
+    {
+        rank="same"
+         linux openstack git python 社区 CI
+
+
+
+
+
+    }
+
+
+  {
+  git ->  {本地操作,远程操作,git对象模型,git分支管理}
+  }
+
+      {
+      本地操作 -> {"git init","git log","git checkout",
+      "git add","git diff","git commit","git reset",
+      "git merge","git rebase","git tag","git rever"}
+
+      远程操作 -> {"git clone","git pull","git push","git fetch"}
+      }
+    {
+    git概念 -> {git对象模型,git分支管理}
+    }
+      {
+      git对象模型 -> {树对象,提交对象,分支,tag,文件对象}
+      }
+      {
+      git分支管理 -> {等待补充}
+      }
+
+
+}
+
+
+@endstartuml
+@enduml

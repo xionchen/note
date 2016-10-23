@@ -1,0 +1,193 @@
+```{puml}
+digraph a {
+    // 设置图、节点和边的默认属性
+    graph [label="diskimage-builder环境的初始化", bgcolor="#EEEEEE"];
+    node [shape=polygon,style="filled", fillcolor="#AAAAAA"];
+    edge [style="", arrowsize=0.6];
+    // 节点和边
+    rankdir="LR";
+    {
+        rank="same"
+         mk_build_dir   -> {创建TMP_BUILD_DIR,创建TMP_IMAGE_DIR} -> tmpfs_check
+
+
+
+
+
+    }
+
+    {
+        rank="same";
+        create_base  -> getopt -> 解析参数 -> 创建cache -> 将参数转为element -> 123;
+
+    }
+
+
+
+  环境初始化 ->  mk_build_dir -> create_base -> 继续
+}
+
+```
+```{puml}
+digraph a {
+    // 设置图、节点和边的默认属性
+    graph [label="create_base", bgcolor="#EEEEEE"];
+    node [shape=polygon,style="filled", fillcolor="#AAAAAA"];
+    edge [style="", arrowsize=0.6];
+    // 节点和边
+    rankdir="R";
+    {
+        创建mnt目录 -> "运行run_d root" -> 配置DNS -> "将宿主系统的/dev和/proc目录挂载到镜像中"
+    }
+
+    {
+      
+
+    }
+
+
+
+
+}
+
+```
+
+```{puml}
+digraph a {
+    // 设置图、节点和边的默认属性
+    graph [label="create_base", bgcolor="#EEEEEE"];
+    node [shape=polygon,style="filled", fillcolor="#AAAAAA"];
+    edge [style="", arrowsize=0.6];
+    // 节点和边
+    rankdir="TB";
+    {
+        check_element -> "check_break before pharse" -> "dib-run-parts" -> "check_break after pharse"
+    }
+    {
+    rank=same
+    check_element -> 
+    }
+  
+
+
+
+
+}
+
+``````{puml}
+
+@startuml
+skinparam monochrome true
+title run_d
+start
+:check_elemnt;
+:generate_hooks;
+:check_before $阶段(用于debug的);
+:dib-run-parts $阶段;
+:check_after $阶段(用于debug的);  
+  
+stop
+
+@enduml
+
+
+
+```
+```{puml}
+@startuml
+skinparam monochrome true
+title generate_hooks
+start
+
+
+if ("存在TMP_HOOKS_PATH") then (false)
+    :generate_hooks;
+    repeat
+    :拷贝所有阶段脚本到钩子目录下;
+    :拷贝element文件夹下深度为1的其他文件;
+    repeat while (more element?)
+endif
+ 
+stop
+
+@enduml
+```
+```{puml}
+
+@startuml
+skinparam monochrome true
+title dib-run-parts
+start
+
+
+:source_environment;
+  repeat
+  :source env_file;
+  repeat while (more env_file in environment.d ?)
+  repeat
+  :run script;
+  :记录运行时间;
+  repeat while (more script in target?)
+
+
+stop
+
+@enduml
+
+
+
+```
+
+
+
+```{puml}
+@startuml
+skinparam monochrome true
+title 下载镜像
+start
+if ("使用缓存的镜像") then (yes)
+ 
+else (no)
+ :下载sha256;
+ :下载镜像文件;
+ if("sha256sum检测通过") (no)
+ :重新下载;
+ endif
+ 
+endif
+:解压到cache目录/进行文件下;
+stop
+@enduml
+```
+
+```{puml}
+@startuml
+skinparam monochrome true
+title run_d_in_target
+start
+:check_element;
+if (该阶段的脚本存在) then (yes)
+    :在镜像的目录中创建一个文件夹in_target.d;
+    :把钩子文件夹挂载到in_target.d下;
+    :检测断点(用于debug);
+    :run_in_target dib-run-part in_target.d下该阶段的目录;
+    :umount刚刚挂载的目录;
+    repeat
+    :umount刚刚的目录;
+    repeat while(5秒内没有umount成功)
+    
+else (no)
+endif
+stop
+@enduml
+
+```
+
+```{puml}
+@startuml
+skinparam monochrome true
+title run_in_target
+start
+stop
+@enduml
+```

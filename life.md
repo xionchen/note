@@ -1,0 +1,13 @@
+- # 2016年 09月 19日 星期一 00:14:07 CST
+- ### 今日关注
+-  #### 有的事情应该交出去就交出去
+-  #### 持续关注
+  - #### couroa课程
+  - #### python课程
+  - #### linux基础(看一本书)
+
+- ### 今日信息
+  - ####  https://www.linux.com/learn/training?page=1  tag linux learn
+  - ####  http://edu.51cto.com/course/courseList/id-48.html tag 综合 learn
+  - ####  http://linuxcommand.org/tlcl.php   tag linux命令行 基础
+  - ####  https://training.linuxfoundation.org/free-linux-training 官网Training

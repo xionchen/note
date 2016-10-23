@@ -1,4 +1,4 @@
-```{puml}
+@startuml
 digraph a {
     // 设置图、节点和边的默认属性
     graph [label="diskimage-builder环境的初始化", bgcolor="#EEEEEE"];
@@ -27,4 +27,5 @@ digraph a {
   环境初始化 ->  mk_build_dir -> create_base -> 继续
 }
 
-```
+
+@endstartuml
